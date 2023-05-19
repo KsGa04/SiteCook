@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+    Layout = "_EnterLayout";
+}
+<link rel="stylesheet" href="~/css/Authorization.css" asp-append-version="true" />
+<form asp-action="Authorization" method="post">
+    <div>
+        <p class="header">Добро пожаловать на кухню</p>
+    </div>
+    <img src="https://i.pinimg.com/564x/05/16/15/051615b7094c4665bf943e3120c60390.jpg"/>
+    <div class="new">
+    <p class="e203_54">Авторизация</p>
+    <p class="e203_58">Почта</p>
+    <input required type="text" name="loginOrEmail" class="input1"/>
+    <p class="e203_64">Пароль</p>
+    <input required type="password" name="password" class="input2"/>
+    <p class="e203_65">Роль</p>
+    <select name="role">
+        <option value="Администратор">Администратор</option>
+        <option value="Модератор">Модератор</option>
+        <option value="Пользователь">Пользователь</option>
+    </select>
+    <p style="color:red; font-size: 12px">@ViewBag.Enter</p>
+    <button type="submit" class="e203_69">Войти</button>
+    <div class="e203_70">
+        <a asp-action="Registration">Регистрация</a>
+    </div>
+    </div>
+</form>
