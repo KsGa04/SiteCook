@@ -1,7 +1,69 @@
 ﻿body {
 }
-.MainImg {
-    height: 600px;
+.MImg {
     float: right;
     margin-right: 20%;
+    display: grid;
+    grid-template-rows: 4fr 1fr;
+}
+.new {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    grid-template-rows: repeat(3, 150px);
+    column-gap: 50%;
+    left: 100px;
+    top: 400px;
+}
+img {
+    margin-top:40px;
+    margin-left:60%;
+}
+.e205_69 {
+    background-color: rgba(255, 229.7125393152237, 164.6875101327896, 1);
+    width: 210px;
+    height: 42px;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 80%;
+    border-width: initial;
+}
+.e205_70 {
+    background-color: rgba(255, 229.7125393152237, 164.6875101327896, 1);
+    width: 210px;
+    height: 42px;
+    text-align: center;
+    margin-top: 20px;
+    border-width: initial;
+    margin-left:100%;
+}
+.e205_58 {
+    color: rgba(0, 0, 0, 1);
+    width: 100%;
+    height: 19px;
+    justify-content: center;
+    position: relative;
+    font-family: Inter;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 0;
+}
+input {
+    position: absolute;
+    width: 200px;
+    height: 35px;
+}
+/*
+.mail {
+    width: 100px;
+}
+.pass {
+    width: 100px;
+}
+.nik {
+    width: 100px;
+}*/
+.save {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    align-content:center;
 }

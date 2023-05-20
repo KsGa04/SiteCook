@@ -8,7 +8,6 @@ using System.Security.Claims;
 
 namespace SiteCook.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
 
@@ -35,7 +34,7 @@ namespace SiteCook.Controllers
                     Administrator? administrator = (from o in db.Administrators where o.Mail == loginOrEmail && o.Password == password select o).FirstOrDefault();
                     if (administrator is not null)
                     {
-                        return RedirectToAction("Stat");
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -64,17 +63,18 @@ namespace SiteCook.Controllers
             {
                 using (CookingBookContext db = new CookingBookContext())
                 {
-                    CurrentUser.CurrentClientId = (from c in db.Users where (c.Mail == loginOrEmail) && c.Password == password select c.IdUser).FirstOrDefault();
-                    User client = (from c in db.Users where (c.Mail == loginOrEmail) && c.Password == password select c).FirstOrDefault();
-                    if (CurrentUser.CurrentClientId > 0)
+                    SiteCook.User client = (from c in db.Users where (c.Mail == loginOrEmail) && c.Password == password select c).FirstOrDefault();
+                    //HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (client is not null)
                     {
-                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, "test"),
-                        new Claim(ClaimTypes.Email, "testc@mail.ru")};
+                        
+                        var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, client.IdUser.ToString()),
+                        new Claim(ClaimTypes.Email, "testc@mail.ru"), new Claim(ClaimsIdentity.DefaultRoleClaimType, "User")};
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                        return View("Main");
+                        return RedirectToAction("Main");
                     }
                     else
                     {
@@ -115,24 +115,42 @@ namespace SiteCook.Controllers
             }
         }
         [AllowAnonymous]
-        public IActionResult Main()
-        {
-            return View();
-        }
+        
         public RedirectToActionResult LeaveAccount()
         {
-            CurrentUser.CurrentClientId = 0;
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Authorization");
         }
+        
         public IActionResult Index()
         {
             return View();
         }
-        
+        [Authorize(Roles = "User")]
+        public IActionResult Main()
+        {
+            return View();
+        }
         public IActionResult PrivateAccount()
         {
             return View();
+        }
+        public RedirectToActionResult SaveChangesUser(string loginOrEmail, string password, string nik, DateTime Data)
+        {
+            var claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            int id = Convert.ToInt32(claim.Value);
+            using (CookingBookContext db = new CookingBookContext())
+            {
+                User currentUser = db.Users.Where(e => e.IdUser == id).FirstOrDefault();
+                currentUser.Mail = loginOrEmail;
+                currentUser.Password = password;
+                currentUser.NikName = nik;
+                currentUser.DateOfBirth = Data;
+                db.SaveChanges();
+            }
+            
+            ViewBag.Message = string.Format("Данные были сохранены");
+            return RedirectToAction("PrivateAccount");
         }
         public IActionResult Privacy()
         {
