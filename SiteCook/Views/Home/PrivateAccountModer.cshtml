@@ -1,13 +1,12 @@
-﻿@model User
+﻿@model Moderator
 @{
-    ViewData["Title"] = "Личный кабинет";
-    Layout = "_Layout";
+    ViewData["Title"] = "Личный кабинет модератора";
+    Layout = "_ModerLayout";
 }
 <link rel="stylesheet" href="~/css/Private.css" asp-append-version="true" />
-<form asp-action="PrivateAccount" method="post">
+<form asp-action="PrivateAccountModer" method="post">
     <div class="MImg">
-          <img src="https://3.404content.com/1/76/B8/1138265597082862982/fullsize.jpg" height=400/>  
-          <button class="e205_69">Добавить рецепт</button>
+          <img src="https://3.404content.com/1/76/B8/1138265597082862982/fullsize.jpg" height=400/>
     </div>
     
     <div class="new">
@@ -26,10 +25,9 @@
     </div>
     <div class="nik">
          <p class="e205_58">Дата рождения</p>
-                <input required type="date" name="Data" asp-format="{0:yyyy-MM-ddTHH:mm:ss}" value="@Model.DateOfBirth"/>
+                <input required type="datetime-local" name="Data" value="@Model.DateOfBirth"/>
     </div>
     <div class="save">
-        <p style="color:red; font-size: 12px; vertical-align: top">@ViewBag.Message</p>
         <button class="e205_70" asp-action="SaveChangesUser">Сохранить изменения</button>
     </div>
     </div>

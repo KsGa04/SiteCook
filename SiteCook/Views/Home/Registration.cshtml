@@ -3,7 +3,7 @@
     Layout = "_EnterLayout";
 }
 <link rel="stylesheet" href="~/css/Registration.css" asp-append-version="true" />
-<form asp-action="Authorization" method="post">
+<form asp-action="Registration" method="post">
     <div>
         <p class="header">Добро пожаловать на кухню</p>
     </div>
@@ -11,12 +11,12 @@
     <div class="new">
     <p class="e203_54">Регистрация</p>
     <p class="e203_58">Почта</p>
-    <input required type="text" name="loginOrEmail" class="input1"/>
+    <input required type="text" name="email" class="input1"/>
     <p class="e203_64">Пароль</p>
     <input required type="password" name="password" class="input2"/>
 
     <p style="color:red; font-size: 12px">@ViewBag.Enter</p>
-    <button type="submit" class="e203_69">Войти</button>
+    <button type="submit" class="e203_69" asp-action="Registration">Зарегистрироваться</button>
     <div class="e203_70">
         <a asp-action="Authorization">Войти</a>
     </div>

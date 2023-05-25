@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Добавление модератора";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="~/css/AddingModerator.css" asp-append-version="true" />
+<form asp-action="AddingModerator" method="post">
+	<body>
+		<p class="main">Добавление модератора</p>
+		<p class="p1">Почта</p>
+		<input type="text" class="email" name="email">
+		<p class="p2">Пароль</p>
+		<input type="text" class="pass" name="pass">
+		<p class="p3">Никнейм</p>
+		<input type="text" class="nickname" name="nickname">
+		<p class="p4">Дата рождения</p>
+		<input required type="date" name="Data" asp-format="{0:yyyy-MM-ddTHH:mm:ss}" class="date">
+		<p class="p5">Категория блюда</p>
+		<select name="namecateg" class="category">
+			@using (CookingBookContext db = new CookingBookContext())
+            {
+				 @foreach (var item in db.Categories)
+    {
+		<option value="@item.NameCategory">@item.NameCategory</option>
+    }
+			}
+		</select>
+		<button type="submit" class="add" asp-action="AddModerator">Добавить</button>
+	</body>
+</form>

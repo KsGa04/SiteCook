@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Добавление блюда";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="~/css/AddingMeal.css" asp-append-version="true" />
+<form asp-action="AddingMeal" method="post">
+
+	<body>
+		<div>
+			<button type="submit" class="delete">Удалить</button>
+			<div class="image">
+				<img id="uploadingMealImage"/>
+			</div>
+			<input required type="file" class="chooseImage d-inline" id="photo-uploader" accept=".png, .jpg, .jpeg"  name="photo"/>
+			<p class="meal">Название блюда </p>
+			<input required type="text" name="nameMeal" class="inputMeal">
+			<button type="submit" class="save" asp-action="AddMeal">Сохранить</button>
+			<table>
+				<tr><th>id</th><th>Название</th><th>id Категории</th></tr>
+				@using (CookingBookContext db = new CookingBookContext())
+            {
+				 @foreach (var item in db.Meals)
+    {
+        <tr>
+            <td>@item.IdMeal</td>
+            <td>@item.NameMeal</td>
+			<td>@item.IdCategory</td>
+        </tr>
+    }
+			}
+			</table>
+			<p class="description">Описание</p>
+			<input type="text" name="desc" class="inputDescription">
+			<p class="category">Категория блюда</p>
+			<select class="selectCategory" name="namecateg">
+				@using (CookingBookContext db = new CookingBookContext())
+            {
+				 @foreach (var item in db.Categories)
+    {
+		<option>@item.NameCategory</option>
+    }
+			}
+			</select>
+		</div>
+	</body>
+
+</form>
+<script src="~/js/MealAdd.js" asp-append-version="true"></script>

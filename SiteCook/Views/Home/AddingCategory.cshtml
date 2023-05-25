@@ -1,0 +1,36 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Добавление категории";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="~/css/AddingCategory.css" asp-append-version="true" />
+<form asp-action="AddingCategory" method="post">
+	<body>
+		<div>
+			<button type="submit" class="delete">Удалить</button>
+			<div class = "image">
+				<img id="uploadingCategoryImage"/>
+			</div>
+			
+			<input required type="file" class="chooseImage d-inline" id="photo-uploader" accept=".png, .jpg, .jpeg"  name="photo"/>
+			<p class="category">Название категории </p>
+			<input required type="text" name="nameCategory" class="inputCategory">
+			<button type="submit" class="save" asp-action="AddCategory">Сохранить</button>
+			<table>
+				<tr><th>id</th><th>Название</th></tr>
+				@using (CookingBookContext db = new CookingBookContext())
+            {
+				 @foreach (var item in db.Categories)
+    {
+        <tr>
+            <td>@item.IdCategory</td>
+            <td>@item.NameCategory</td>
+        </tr>
+    }
+			}
+			</table>
+		</div>
+	</body>
+
+</form>
+<script src="~/js/CategoryAdd.js" asp-append-version="true"></script>
